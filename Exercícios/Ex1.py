@@ -9,50 +9,49 @@ class SuffixTree:
     
     def print_tree(self):
         for k in self.nodes.keys():
-            if self.nodes[k][0] < 0:
+            if self.nodes[k][0] < 0: # se não for folha
                 print (k, "->", self.nodes[k][1]) 
-            else:
+            else: # se for folha 
                 print (k, ":", self.nodes[k][0])
                 
-    def add_node(self, origin, symbol, leafnum = -1):
-        self.num += 1
-        self.nodes[origin][1][symbol] = self.num
-        self.nodes[self.num] = (leafnum,{})
+    def add_node(self, origin, symbol, leafnum = -1): #adiciona um no que ainda não exista
+        self.num += 1 #incrementa o nº do no
+        self.nodes[origin][1][symbol] = self.num #acede ao dicionário do tuplo do nó
+        self.nodes[self.num] = (leafnum,{}) #cria o tuplo para o no a seguir
         
-    def add_suffix(self, p, sufnum):
+    def add_suffix(self, p, sufnum): # fornecido o padrão e a posição no padrão
         pos = 0
         node = 0
-        while pos < len(p):
-            if p[pos] not in self.nodes[node][1].keys():
-                if pos == len(p)-1:
-                    self.add_node(node, p[pos], sufnum)
-                else:
-                    self.add_node(node, p[pos])
-            node = self.nodes[node][1][p[pos]]
-            pos += 1
+        while pos < len(p): #enquanto a posição for inferior ao padrão
+            if p[pos] not in self.nodes[node][1].keys(): # se a letra na posição pos não estiver no dicionário nó
+                if pos == len(p)-1: #se a posição for a última do padrão ($)
+                    self.add_node(node, p[pos], sufnum) #adiciona a folha (no final)
+                else: #se não for $
+                    self.add_node(node, p[pos]) #adiciona um no, sendo que o sufnum se mantem -1
+            node = self.nodes[node][1][p[pos]] #passar para o próximo no
+            pos += 1 # incrementar a posição
     
-    def suffix_tree_from_seq(self, text):
-        t = text+"$"
-        self.seq = t
+    def suffix_tree_from_seq(self, text): #criar a arvore de sufixos a partir de uma sequencia
+        self.seq = text
+        t = text+"$" #adicionar dollar no final da seq
         for i in range(len(t)):
-            self.add_suffix(t[i:], i)
+            self.add_suffix(t[i:], i) #os sufixos vão sendo adicionados
             
-    def find_pattern(self, pattern):
-        pos = 0
+    def find_pattern(self, pattern): #procura um padrão e retorna a sua posição inicial   
         node = 0
-        for pos in range(len(pattern)):
-            if pattern[pos] in self.nodes[node][1].keys():
-                node = self.nodes[node][1][pattern[pos]]
+        for pos in range(len(pattern)): #percorre o padrão 
+            if pattern[pos] in self.nodes[node][1].keys(): #se o caracter estiver no dicionário
+                node = self.nodes[node][1][pattern[pos]] # diz o valor do no que se deve ir para continuar a ver o sufixo
             else: return None
-        return self.get_leafes_below(node)
+        return self.get_leafes_below(node) #se o padrão for encontrado, devolve uma lista com os nós da arvore onde começa o padrão
         
 
-    def get_leafes_below(self, node):
+    def get_leafes_below(self, node): #encontrar as folhas que estão por baixo de um nó
         res = []
-        if self.nodes[node][0] >=0: 
-            res.append(self.nodes[node][0])            
-        else:
-            for k in self.nodes[node][1].keys():
+        if self.nodes[node][0] >=0: # se o nó for uma folha o padrão foi encontrado
+            res.append(self.nodes[node][0]) #adicionar a posição da folha à lista            
+        else: #se ainda não for uma folha
+            for k in self.nodes[node][1].keys(): 
                 newnode = self.nodes[node][1][k]
                 leafes = self.get_leafes_below(newnode)
                 res.extend(leafes)
