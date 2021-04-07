@@ -84,9 +84,9 @@ class SuffixTree:
                 k = len(seq) - a #tamanho da sequencia que ainda não foi percorrida
                 tamanho = len(prefix) #tamanho da tentativa atual, começa por ser do tamanho do prefixo
                 while k >= tamanho: #enquanto o tamanho da tentativa atual é menor do que o tamanho da sequencia não percorrida
-                    res.append(s[a : a+k]) #adiciona à lista a parte da sequencia em foco
+                    res.append(s[a : a+tamanho]) #adiciona à lista a parte da sequencia em foco
                     tamanho += 1 #incrementação para quebrar o ciclo
-        return res
+        return sorted(set(res))
 
 
 def test():
@@ -96,7 +96,7 @@ def test():
     st.print_tree()
     print (st.find_pattern("TA"))
     print (st.find_pattern("ACG"))
-    print (st.nodes_below())
+    print (st.nodes_below(0))
     print(st.matches_prefix("TA"))
 
 def test2():
