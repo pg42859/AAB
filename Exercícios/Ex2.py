@@ -80,15 +80,15 @@ class SuffixTree_2Seq:
 
 
     def largestCommonSubstring(self):
-        subseq = ""  # maior sequencia será guardada
-        for x in range(len(self.seq1)):  # corre a primeira sequencia
-            for y in range(len(self.seq2)):  # corre a segunda sequencia
-                c = 1
-                while x + c <= len(self.seq1) and y + c <= len(self.seq2):  # ciclo while que vai permitir aumentar a janela a analisar em ambas as sequencias
-                    if self.seq1[x:x+c] == self.seq2[y:y+c]:  # se os caracteres fruto deste splicing forem iguais de uma seq para a outra
-                        if len(subseq) <= len(self.seq1[x:x+c]):  # e se o tamanho desse for maior ou igual que o tamanho da subsequencia já gravada
-                            subseq = self.seq1[x:x+c]  # subsquencia comum passa a ser essa
-                    c += 1  # vai correr até que o tamanho da janela supere o tamanha de uma das sequencias
+        subseq = ""  # subseq a ser guardada
+        for x in range(len(self.seq1)):  # percore a seq1
+            for y in range(len(self.seq2)):  # percorre a seq2
+                k = 1
+                while x + k <= len(self.seq1) and y + k <= len(self.seq2):  # ciclo while que vai permitir analisar as duas seqs
+                    if self.seq1[x:x+k] == self.seq2[y:y+k]:  # se os caracteres forem iguais
+                        if len(subseq) <= len(self.seq1[x:x+k]):  # e se o tamanho desta seleção for maior ou igual ao da subseq anteriormente gravada
+                            subseq = self.seq1[x:x+k]  # subsq passa a ser esta
+                    k += 1  # incrementar de forma a parar o ciclo
         return subseq
 
 
