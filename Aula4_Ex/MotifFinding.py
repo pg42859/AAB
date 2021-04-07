@@ -58,8 +58,8 @@ class MotifFinding:
         for j in range(len(mat[0])):
             maxcol = mat[0][j]
             for i in range(1, len(mat)):
-                if mat[i][j] > maxol:
-                    malxol = mat[i][j]
+                if mat[i][j] > maxcol:
+                    maxcol = mat[i][j]
             score += maxcol
         return score
 
@@ -214,7 +214,7 @@ class MotifFinding:
             s.insert(seq_idx, novo_ind) #adicionar o novo indice que vem da função roulette
             scr = self.score(s) #faz o score para o novo vetor
             if scr > bestscr:
-                bestcr = scr
+                bestscr = scr
                 vfinal = s
             k += 1
         return vfinal
@@ -273,7 +273,7 @@ class MotifFinding:
             s.insert(seq_idx, novo_ind) #adicionar o novo indice que vem da função roulette
             scr = self.ps_score(s) #faz o score para o novo vetor
             if scr > bestscr:
-                bestcr = scr
+                bestscr = scr
                 vfinal = s
             k += 1
         return vfinal
