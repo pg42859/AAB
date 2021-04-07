@@ -51,22 +51,22 @@ class SuffixTree:
         if self.nodes[node][0] >=0: # se o nó for uma folha o padrão foi encontrado
             res.append(self.nodes[node][0]) #adicionar a posição da folha à lista            
         else: #se ainda não for uma folha
-            for k in self.nodes[node][1].keys(): 
-                newnode = self.nodes[node][1][k]
-                leafes = self.get_leafes_below(newnode)
-                res.extend(leafes)
+            for k in self.nodes[node][1].keys(): # percorrer todas as keys do nó
+                newnode = self.nodes[node][1][k] # criar o novo nó com k
+                leafes = self.get_leafes_below(newnode) # recursivividade para chegar até à folha
+                res.extend(leafes) #concatenar a lista res com a lista das leafes
         return res
     
 
     #Ex 1a
     def nodes_below(self, node):
         res = []
-        if node in self.nodes.keys():
-            for x in self.nodes[node][1].values():
-                res.append(x)
-            for n in res:
-                for y in self.nodes[n][1].values():
-                    res.append(y)
+        if node in self.nodes.keys(): # se o nó estiver presente na árvore
+            for x in self.nodes[node][1].values(): # para cada nó proveniente do nó dado
+                res.append(x) #adicionar à lista 
+            for n in res: #para cada nó na lista resultado
+                for y in self.nodes[n][1].values(): # para cada nó proveniente do nó n
+                    res.append(y) #adicionar à lista
             return res
         else:
             return None
@@ -74,18 +74,18 @@ class SuffixTree:
     
     #Ex 1b
     def matches_prefix(self, prefix):
-        if self.find_pattern(prefix) is None:
+        if self.find_pattern(prefix) is None: #ver se o prefixo existe
             return None
         else:
             res = []
-            padrao = self.find_pattern(prefix)
+            padrao = self.find_pattern(prefix) #posições dos nós do padrão
             s = self.seq
-            for a in padrao:
-                k = len(seq) - a
-                tamanho = len(prefix)
-                while tamanho <= k:
-                    res.append(s[a : a+k])
-                    tamanho += 1
+            for a in padrao: #iterar os nós do padrão
+                k = len(seq) - a #tamanho da sequencia que ainda não foi percorrida
+                tamanho = len(prefix) #tamanho da tentativa atual, começa por ser do tamanho do prefixo
+                while k >= tamanho: #enquanto o tamanho da tentativa atual é menor do que o tamanho da sequencia não percorrida
+                    res.append(s[a : a+k]) #adiciona à lista a parte da sequencia em foco
+                    tamanho += 1 #incrementação para quebrar o ciclo
         return res
 
 
@@ -107,7 +107,6 @@ def test2():
     print(st.repeats(2,2))
 
 test()
-print()
 test2()
         
             
