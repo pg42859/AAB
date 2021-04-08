@@ -32,27 +32,25 @@ class MyMotifs:
         self.counts = createMatZeros(len(self.alphabet), self.size) #cria matriz de zeros
         for j in range(len(self.counts)): #para cada linha da matriz
             for i in range(len(self.counts[0])): #para cada coluna da matriz
-                self.counts[j][i] +=1
+                self.counts[j][i] +=1 #adiciona 1 a todos valores
             for s in self.seqs:
                 for i in range(self.size): #vai preenchendo a matriz tendo em conta a ocorrencia de cada caracter (nucleotidos)
                     lin = self.alphabet.index(s[i])
                     self.counts[lin][i] +=1
                 
     def createPWM(self):
-        if self.counts == None:
-            self.doCounts()
-        self.pwm = createMatZeros(len(self.alphabet), self.size)
-        for i in range(len(self.alphabet)):
-            for j in range(self.size):
-                self.pwm[i][j] = float(self.counts[i][j]) / len(self.seqs)
+        self.doCounts() #faz matriz contagens
+        self.pwm = createMatZeros(len(self.alphabet), self.size) #cria uma matriz de zeros com 4 linhas e nº de colunas do tamanho da seq
+        for i in range(len(self.alphabet)): #percorre as linhas
+            for j in range(self.size): #percorre as colunas
+                self.pwm[i][j] = float(self.counts[i][j]) / len(self.seqs) #divide o valor presente na matriz contagens pelo numero de seqs, mudando na matriz de zeros
     
     def createPWM_ps(self):
-        if self.counts == None:
-            self.doCounts_ps()
-        self.pwm = createMatZeros(len(self.alphabet), self.size)
-        for i in range(len(self.alphabet)):
-            for j in range(self.size):
-                self.pwm[i][j] = float(self.counts[i][j]) / len(self.seqs)
+        self.doCounts_ps() #faz matriz das pseudo-contagens
+        self.pwm = createMatZeros(len(self.alphabet), self.size) #matriz de zeros
+        for i in range(len(self.alphabet)): #percorre as linhas
+            for j in range(self.size): #percorre as colunas
+                self.pwm[i][j] = float(self.counts[i][j]) / len(self.seqs) #divide o valor presente na matriz contagens pelo numero de seqs, substituindo na matriz de zeros
                 
     def consensus(self):
         res = ""
@@ -81,28 +79,28 @@ class MyMotifs:
                 res += "-"
         return res
 
-    def probabSeq (self, seq):
+    def probabSeq (self, seq): #uma seq inteira
         res = 1.0
-        for i in range(self.size):
-            lin = self.alphabet.index(seq[i])
-            res *= self.pwm[lin][i]
+        for i in range(self.size): #percorre todas as posições da seq
+            lin = self.alphabet.index(seq[i]) #tendo em conta o alfabeto, encontra a linha para ser usada na pwm
+            res *= self.pwm[lin][i] #multiplica-se o valor
         return res
     
-    def probAllPositions(self, seq):
+    def probAllPositions(self, seq): #recebe uma seq e vai calculando as probabilidades de cada posição
         res = []
         for k in range(len(seq)-self.size+1):
-            res.append(self.probabSeq(seq))
+            res.append(self.probabSeq(seq)) #dúvida
         return res
 
-    def mostProbableSeq(self, seq):
+    def mostProbableSeq(self, seq): #recebe uma seq
         maximo = -1.0
         maxind = -1
-        for k in range(len(seq)-self.size):
-            p = self.probabSeq(seq[k:k+ self.size])
-            if(p > maximo):
+        for k in range(len(seq)-self.size): #itera num range entre o tamanho da seq menos o tamanho do motif
+            p = self.probabSeq(seq[k:k+ self.size]) #probabilidade de cada motif ocorrer
+            if(p > maximo): #devolve maior probabilidade
                 maximo = p
                 maxind = k
-        return maxind
+        return maxind #indice com maior probabilidade
 
 def test():
     # test
@@ -118,7 +116,12 @@ def test():
     lseqs = [seq1, seq2, seq3, seq4, seq5, seq6, seq7, seq8]
     motifs = MyMotifs(lseqs)
     printMat (motifs.counts)
+    motifs.doCounts_ps()
+    printMat(motifs.count)
+    print()
     printMat (motifs.pwm)
+    motifs.createPWM_pseudo()
+    printMat(motifs.pwm)
     print(motifs.alphabet)
     
     print(motifs.probabSeq("AAACCT"))
