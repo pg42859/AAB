@@ -117,7 +117,7 @@ def test():
     motifs = MyMotifs(lseqs)
     printMat (motifs.counts)
     motifs.doCounts_ps()
-    printMat(motifs.count)
+    printMat(motifs.counts)
     print()
     printMat (motifs.pwm)
     motifs.createPWM_pseudo()
