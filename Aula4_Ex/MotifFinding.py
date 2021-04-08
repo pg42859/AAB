@@ -210,8 +210,8 @@ class MotifFinding:
             motif.createPWM() #fazer pwm e ver o consenso
             prob = motif.probAllPositions(igno_seq) #calcular a probabilidade de todas as sequencias possiveis na seq removida
             novo_ind = self.roulette(prob) # escolher um indice de acordo com a probabilidade obtida na função anterior
-            self.seqs.insert(seq_idx, igno_seq) #adicionar de novo a seq retirada
-            s.insert(seq_idx, novo_ind) #adicionar o novo indice que vem da função roulette
+            self.seqs.insert(seq_idx, igno_seq) #adicionar de novo a seq retirada no sitio onde estava anteriormente
+            s.insert(seq_idx, novo_ind) #adicionar o novo indice que vem da função roulette no sitio onde estava anteriormente
             scr = self.score(s) #faz o score para o novo vetor
             if scr > bestscr:
                 bestscr = scr
@@ -269,8 +269,8 @@ class MotifFinding:
             motif.createPWM_ps() #fazer pwm e ver o consenso
             prob = motif.probAllPositions(igno_seq) #calcular a probabilidade de todas as sequencias possiveis na seq removida
             novo_ind = self.roulette(prob) # escolher um indice de acordo com a probabilidade obtida na função anterior
-            self.seqs.insert(seq_idx, igno_seq) #adicionar de novo a seq retirada
-            s.insert(seq_idx, novo_ind) #adicionar o novo indice que vem da função roulette
+            self.seqs.insert(seq_idx, igno_seq) #adicionar de novo a seq retirada no sitio onde estava anteriormente
+            s.insert(seq_idx, novo_ind) #adicionar o novo indice que vem da função roulette no sitio onde estava anteriormente
             scr = self.ps_score(s) #faz o score para o novo vetor
             if scr > bestscr:
                 bestscr = scr
