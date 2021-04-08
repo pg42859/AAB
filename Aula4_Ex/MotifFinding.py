@@ -165,7 +165,7 @@ class MotifFinding:
             melhorScore = -1
             melhorPosicao = 0
             for j in range(self.seqSize(i) - self.motifSize + 1): 
-                s[i] = j #adiciona a seq seguinte para ser comparada com o consenso das primeiras
+                s[i] = j # inicio da subsequencia na seq a observar
                 score_atual = self.score(s) #calcula o score
                 if score_atual > melhorScore: #se o score aumentar
                     melhorScore = score_atual #passa a ser o melhor score
