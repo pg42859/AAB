@@ -201,6 +201,8 @@ class MotifFinding:
         s = [0] * len(self.seqs) #vetor de posições iniciais com zeros
         for i in range(len(self.seqs)):
             s[i] = randint(0, self.seqSize(i) - self.motifSize) #criar o vetor das posições iniciais aleatórias
+        vfinal = s #variavel que vai receber as posições iniciais com melhor score
+        bestscr = self.score(s) #score do s com as posições aleatorias
         k = 0
         while k < n:
             seq_idx = randint(0, len(self.seqs) - 1) #escolher uma seq aleatoria
@@ -260,6 +262,8 @@ class MotifFinding:
         s = [0] * len(self.seqs) #vetor de posições iniciais 
         for i in range(len(self.seqs)):
             s[i] = randint(0, self.seqSize(i) - self.motifSize) #criar o vetor das posições iniciais aleatórias
+        vfinal = s #variavel que vai receber as posições iniciais com melhor score
+        bestscr = self.score(s) #score do s com as posições aleatorias
         k = 0
         while k < n:
             seq_idx = randint(0, len(self.seqs) - 1) #escolher uma seq aleatoria
