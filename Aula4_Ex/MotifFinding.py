@@ -245,7 +245,7 @@ class MotifFinding:
         improve = True
         while improve: #enquando houver melhoria
             motif = self.createMotifFromIndexes(s) #cria os motifs a partir do vetor de posições iniciais
-            motif.createPWM() # cria a PWM dos motifs criados
+            motif.createPWM_ps() # cria a PWM dos motifs criados
             for i in range(len(self.seqs)): #para todas as seqs
                 s[i] = motif.mostProbableSeq(self.seqs[i]) #vê qual a subsequencia mais provavel, mudando a posição inicial para a posição encontrada
             scr = self.ps_score(s) #calcula o score
